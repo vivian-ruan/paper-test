@@ -1,0 +1,84 @@
+import java.util.Scanner;
+public class LinkListOperation{
+	public static class Node{
+		int value;
+		Node next;
+		Node(int x){
+		    value = x;
+		}
+	}
+
+	public static void main(String[] args) 
+	{
+		Scanner in=new Scanner(System.in);
+		Node head = null;
+		if(in.hasNextInt()){
+			head = new Node(in.nextInt());
+		}
+		Node temp = head;
+		while(in.hasNextInt()){
+			temp.next = new Node(in.nextInt());
+			temp = temp.next;
+		}
+
+		in.close();	
+		print(head);
+//		System.out.print(size(head) + "\t");
+		reverseLink(head, 3);	
+		print(head);
+//		System.out.print(size(head) + "\t");
+
+	}
+
+	public static void print(Node head){
+		System.out.print(head.value + "\t");
+		if(head.next !=null) print(head.next);
+	
+	}
+
+	public static Node reverseLink(Node head, int k){
+		if(k<2 || head ==null){
+		    return head;
+		}
+
+		int num = k;
+		Node p = head;
+		
+		while(num>1&&p!=null){
+			p = p.next;
+			num--;		
+		}
+		if(p==null){
+			return head;		
+		}
+		num = k;
+		p=head;
+		Node q = null;
+		Node r = null;
+
+		while (num>1){
+			q=p.next;
+			r=q.next;
+			q.next=head;
+			p.next=r;
+			head=q;
+			num--;
+		}
+		
+		print(p.next);
+
+		p.next=reverseLink(p.next,k);
+		return head;
+	}
+
+	public static int size(Node head){
+
+		int i = 0;
+		while(head!=null){
+		i++;
+		head=head.next;
+		}
+		return i;
+	
+	}
+}
